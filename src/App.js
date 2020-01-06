@@ -1,26 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import EventDashboard from "./features/event/EventDashboard/EventDashboard";
+import Navbar from "./features/nav/Navbar/Navbar";
+import { Container } from "semantic-ui-react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  render() {
+    return (
+
+      <>
+        <Navbar />
+        <Container className='main'>
+          <EventDashboard />
+        </Container>
+      </>
+
+    );
+  }
 }
 
 export default App;
