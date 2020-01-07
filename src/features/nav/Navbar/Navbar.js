@@ -39,6 +39,7 @@ class Navbar extends Component {
             Re-vents
           </Menu.Item>
           <Menu.Item as={NavLink} to='/events' name="Events" />
+          <Menu.Item as={NavLink} to='/test' name="Redux Practice" />
           <Menu.Item as={NavLink} to='/people' name="People" />
           <Menu.Item as={NavLink} to='/create-event'>
             <Button floated="right" positive inverted content="Create Event" />

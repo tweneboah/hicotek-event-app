@@ -1,5 +1,6 @@
 import React from 'react';
 import { Menu, Image, Dropdown } from 'semantic-ui-react';
+import { Link, NavLink } from 'react-router-dom';
 
 const SingInMenu = ({ handleSignOut }) => {
 
@@ -13,7 +14,7 @@ const SingInMenu = ({ handleSignOut }) => {
                     <Dropdown.Item text="My Events" icon="calendar" />
                     <Dropdown.Item text="My Network" icon="users" />
                     <Dropdown.Item text="My Profile" icon="user" />
-                    <Dropdown.Item text="Settings" icon="settings" />
+                    <Dropdown.Item as={Link} to='/settings' text="Settings" icon="settings" />
                     <Dropdown.Item text="Sign Out"
                         onClick={handleSignOut}
                         icon="power" />
