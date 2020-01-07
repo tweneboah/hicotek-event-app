@@ -3,7 +3,6 @@ import EventDashboard from "../../features/event/EventDashboard/EventDashboard";
 import Navbar from "../../features/nav/Navbar/Navbar";
 import { Container } from "semantic-ui-react";
 import { Route } from "react-router-dom";
-import EventDetailPage from "../../features/event/EventDetailPage/EventDetailPage";
 import HomePage from "../../features/home/HomePage";
 import PeopleDashboard from "../../features/user/PeopleDashboard/PeopleDashboard";
 import UserDetailed from "../../features/user/userDetailed/UserDetailed";

@@ -6,11 +6,15 @@ import * as serviceWorker from './serviceWorker';
 import 'semantic-ui-css/semantic.min.css'
 import { BrowserRouter } from 'react-router-dom';
 import App from './app/layout/App';
-ReactDOM.render(
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>
+import { Provider } from 'react-redux';
+import { store } from './app/layout/store/storeConfiguration';
 
+ReactDOM.render(
+    <Provider store={store}>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+    </Provider>
     , document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
