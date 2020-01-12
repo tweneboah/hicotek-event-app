@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { Segment, Form, Button } from "semantic-ui-react";
+import { connect } from "react-redux";
+import { updateEvent, createEvent } from "../../redux/actions/eventActions";
+
 
 class EventForm extends Component {
     state = {
@@ -35,10 +38,14 @@ class EventForm extends Component {
         event.preventDefault()
         console.log(this.state.id)
         if (this.state.id) {
-            return this.props.handleUpdateEvent(this.state);
+            return this.props.updateEvent(this.state);
         } else {
             this.props.createEvent(this.state)
+
         }
+
+
+
     }
 
 
@@ -46,7 +53,7 @@ class EventForm extends Component {
 
     render() {
 
-        console.log(this.state)
+        console.log('form', this.state)
         //destructure
         const { handleFormCancel } = this.props
 
@@ -54,7 +61,7 @@ class EventForm extends Component {
         const { title, date, city, hostedBy, venue } = this.state
         return (
             <Segment>
-                <Form onSubmit={this.handleSubmit}>
+                <Form onSubmit={() => this.props.updateEvent(this.state)}>
                     <Form.Field>
                         <label>Event Title</label>
                         <input name='title' onChange={this.handleInputchange} value={title} placeholder="First Name" />
@@ -93,11 +100,24 @@ class EventForm extends Component {
                     <Button positive type="submit">
                         Submit
                       </Button>
-                    <Button type="button" onClick={handleFormCancel}>Cancel</Button>
+                    <Button type="button" onClick={() => this.props.usersAction(this.state)}>fetch</Button>
                 </Form>
             </Segment>
         );
     }
 }
 
-export default EventForm;
+const actions = {
+    updateEvent,
+    createEvent
+}
+
+
+
+const mapData = (state) => {
+    return {
+        data: state
+    }
+}
+
+export default connect(mapData, actions)(EventForm);

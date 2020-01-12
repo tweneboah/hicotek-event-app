@@ -8,7 +8,7 @@ import PeopleDashboard from "../../features/user/PeopleDashboard/PeopleDashboard
 import UserDetailed from "../../features/user/userDetailed/UserDetailed";
 import SettingsDashboard from "../../features/user/Settings/SettingsDashboard";
 import EventForm from "../../features/event/EventForm/EventForm";
-import Testcomponent from "../../features/testarea/Testcomponent";
+
 
 
 class App extends Component {
@@ -23,7 +23,7 @@ class App extends Component {
               <Navbar />
 
               <Container className='main'>
-                <Route exact path='/test' component={Testcomponent} />
+
                 <Route exact path='/events' component={EventDashboard} />
                 <Route exact path='/people' component={PeopleDashboard} />
                 <Route exact path='/profile/:id' component={UserDetailed} />

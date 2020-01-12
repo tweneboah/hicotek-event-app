@@ -1,7 +1,15 @@
 import React, { Component } from "react";
 import { Segment, Item, Icon, List, Button } from "semantic-ui-react";
 import EventListAttendee from './EventListAttendee'
+import { connect } from "react-redux";
+import { deleteEvent, updateEvent } from "../../redux/actions/eventActions";
 class EventListItem extends Component {
+
+
+
+    handleUpdateEvent = (event) => {
+        this.props.updateEvent(event);
+    }
 
     render() {
         const { event, handleSelectedEvent, handleDelete } = this.props;
@@ -38,7 +46,7 @@ class EventListItem extends Component {
                 <Segment clearing>
                     <span>{event.description}</span>
                     <Button
-                        onClick={() => handleDelete(event.id)}
+                        onClick={() => this.handleDelete(event.id)}
                         as="a" color="red"
                         floated="right"
                         content="Delete" />
@@ -56,4 +64,11 @@ class EventListItem extends Component {
     }
 }
 
-export default EventListItem;
+const actions = {
+    deleteEvent,
+    updateEvent
+}
+
+
+
+export default connect(null, actions)(EventListItem);

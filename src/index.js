@@ -7,7 +7,9 @@ import 'semantic-ui-css/semantic.min.css'
 import { BrowserRouter } from 'react-router-dom';
 import App from './app/layout/App';
 import { Provider } from 'react-redux';
-import { store } from './app/layout/store/storeConfiguration';
+import store from './features/redux/store';
+
+
 
 ReactDOM.render(
     <Provider store={store}>
