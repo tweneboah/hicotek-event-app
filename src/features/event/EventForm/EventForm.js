@@ -12,13 +12,6 @@ class EventForm extends Component {
     hostedBy: ""
   };
 
-  componentDidMount() {
-    if (this.props.selectedEventData !== null)
-      this.setState({
-        ...this.props.selectedEventData
-      });
-  }
-
   //handlechange
   handleInputchange = (event) => {
     //destructure event object
@@ -33,12 +26,7 @@ class EventForm extends Component {
   handleSubmit = (event) => {
     //Check if there is already a value for the state which has an id because at this stage all the state is from an already data which is not from the form so originally there is an id which is not created from the form
     event.preventDefault();
-    console.log(this.state.id);
-    if (this.state.id) {
-      return this.props.updateEvent(this.state);
-    } else {
-      this.props.createEvent(this.state);
-    }
+    console.log(this.state);
   };
 
   render() {
@@ -50,7 +38,7 @@ class EventForm extends Component {
     const { title, date, city, hostedBy, venue } = this.state;
     return (
       <Segment>
-        <Form onSubmit={() => this.props.updateEvent(this.state)}>
+        <Form onSubmit={this.handleSubmit}>
           <Form.Field>
             <label>Event Title</label>
             <input
@@ -91,6 +79,8 @@ class EventForm extends Component {
           <Form.Field>
             <label>Hosted By</label>
             <input
+              value={hostedBy}
+              onChange={this.handleInputchange}
               name="hostedBy"
               placeholder="Enter the name of person hosting"
             />
