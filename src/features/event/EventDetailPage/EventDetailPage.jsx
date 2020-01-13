@@ -6,35 +6,9 @@ import EventDetailedHeader from "./EventDetailedHeader";
 import EventDetailedInfo from "./EventDetailedInfo";
 import EventDetailedChat from "./EventDetailedChat";
 import EventDetailedSidebar from "./EventDetailedSidebar";
+import { connect } from "react-redux";
 
-//-------STATIC DATA-------
-
-const event = {
-  id: "1",
-  title: "Trip to Tower of London",
-  date: "2018-03-27",
-  category: "culture",
-  description:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sollicitudin ligula eu leo tincidunt, quis scelerisque magna dapibus. Sed eget ipsum vel arcu vehicula ullamcorper.",
-  city: "London, UK",
-  venue: "Tower of London, St Katharine's & Wapping, London",
-  hostedBy: "Bob",
-  hostPhotoURL: "https://randomuser.me/api/portraits/men/20.jpg",
-  attendees: [
-    {
-      id: "a",
-      name: "Bob",
-      photoURL: "https://randomuser.me/api/portraits/men/20.jpg"
-    },
-    {
-      id: "b",
-      name: "Tom",
-      photoURL: "https://randomuser.me/api/portraits/men/22.jpg"
-    }
-  ]
-};
-
-const EventDetailPage = () => {
+const EventDetailPage = ({ event }) => {
   return (
     <Grid>
       <Grid.Column width={10}>
@@ -50,4 +24,23 @@ const EventDetailPage = () => {
   );
 };
 
-export default EventDetailPage;
+const mapStateToprops = (state, ownProps) => {
+  //Since our component is rendered by react routerDOM, it imposes additional props like match.params.id and since this is not from redux we can access all the that components onw props by passing a second argument to mapStateToProps
+
+  //We want to get the id from this component
+
+  const eventId = ownProps.match.params.id;
+  let event = {}; //for making logic
+
+  //Check if there is eventId and there is event in our store
+
+  if (eventId && state.events.length > 0) {
+    //Display the content that matches the id in the params and then give that data to this component to  render
+    event = state.events.filter((event) => event.id === eventId)[0]; //This helps to access the actual event;
+  }
+  return {
+    event
+  };
+};
+
+export default connect(mapStateToprops)(EventDetailPage);
