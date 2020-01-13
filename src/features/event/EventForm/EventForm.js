@@ -12,9 +12,9 @@ class EventForm extends Component {
     hostedBy: ""
   };
 
-  //handlechange
+  //-----HANDLE INPUT CHANGE-------------
+
   handleInputchange = (event) => {
-    //destructure event object
     const { name, value } = event.target;
     this.setState({
       // [event.target.name]: event.target.value
@@ -22,20 +22,34 @@ class EventForm extends Component {
     });
   };
 
-  //handleSubmit
+  //--------HANDLE SUBMIT-----------
+
   handleSubmit = (event) => {
-    //Check if there is already a value for the state which has an id because at this stage all the state is from an already data which is not from the form so originally there is an id which is not created from the form
     event.preventDefault();
-    this.props.handleCreateEvent(this.state);
+    //Check if there is an already event data in ourt state because we updated our for state values with componentDidMount
+
+    if (this.state.id) {
+      this.props.handleUpdateEvent(this.state);
+    } else {
+      this.props.handleCreateEvent(this.state);
+    }
   };
 
-  render() {
-    console.log("form", this.state);
-    //destructure
-    const { cancelFormOpen } = this.props;
+  //------POPULATE THE SELECTED EVENT DATA INTO OUR FORM THROUGH STATE-------
 
-    //destructuring form Inpunts
+  componentDidMount() {
+    if (this.props.selectedEventData !== null) {
+      this.setState({
+        ...this.props.selectedEventData
+      });
+    }
+  }
+
+  render() {
+    const { cancelFormOpen, handleUpdateEvent } = this.props;
+
     const { title, date, city, hostedBy, venue } = this.state;
+
     return (
       <Segment>
         <Form onSubmit={this.handleSubmit}>
