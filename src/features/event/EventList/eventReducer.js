@@ -1,5 +1,8 @@
 /** @format */
 
+import { CREATE_EVENET, UPDATE_EVENET, DELETE_EVENET } from "../eventConstants";
+import { createReducer } from "../../../src/app/common/util/reducerUtil";
+
 const initialState = [
   {
     id: "1",
@@ -50,3 +53,24 @@ const initialState = [
     ]
   }
 ];
+
+const createEvent = (state, payload) => {
+  return [...state, payload.event];
+};
+
+const updateEvent = (state, payload) => {
+  return [
+    ...state.filter((event) => event.id !== payload.event.id),
+    payload.event
+  ];
+};
+
+const deleteEvent = (state, payload) => {
+  return [...state.filter((event) => event.id !== payload.event.id)];
+};
+
+export default createReducer(initialState, {
+  [CREATE_EVENET]: createEvent,
+  [UPDATE_EVENET]: updateEvent,
+  [DELETE_EVENET]: deleteEvent
+});
