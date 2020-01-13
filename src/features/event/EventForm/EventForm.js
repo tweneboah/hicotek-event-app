@@ -26,7 +26,7 @@ class EventForm extends Component {
   handleSubmit = (event) => {
     //Check if there is already a value for the state which has an id because at this stage all the state is from an already data which is not from the form so originally there is an id which is not created from the form
     event.preventDefault();
-    console.log(this.state);
+    this.props.handleCreateEvent(this.state);
   };
 
   render() {

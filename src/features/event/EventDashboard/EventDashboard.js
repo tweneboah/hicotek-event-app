@@ -4,6 +4,7 @@ import React, { Component } from "react";
 import { Grid, Button } from "semantic-ui-react";
 import EventList from "../EventList/EventList";
 import EventForm from "../EventForm/EventForm";
+import cuid from "cuid";
 
 const eventsFromDashboard = [
   {
@@ -62,13 +63,25 @@ class EventDashboard extends Component {
     isOpen: false
   };
 
+  //------------CREATE EVENT-----------------------
+
+  handleCreateEvent = (newEvent) => {
+    //Adding properties to the object
+    newEvent.id = cuid();
+    newEvent.hostPhotoURL = "/assets/user.png";
+    this.setState(({ events }) => ({
+      events: [...events, newEvent],
+      isOpen: false
+    }));
+  };
+
+  //----------------HANDLEFORM TOGGLE------------
   handleIsOpenToggle = () => {
     this.setState(({ isOpen }) => ({
       isOpen: !isOpen
     }));
   };
 
-  
   render() {
     const { events, isOpen } = this.state;
     return (
@@ -82,7 +95,12 @@ class EventDashboard extends Component {
             content="Create Event"
             onClick={this.handleIsOpenToggle}
           />
-          {isOpen && <EventForm cancelFormOpen={this.handleIsOpenToggle} />}
+          {isOpen && (
+            <EventForm
+              cancelFormOpen={this.handleIsOpenToggle}
+              handleCreateEvent={this.handleCreateEvent}
+            />
+          )}
         </Grid.Column>
       </Grid>
     );
