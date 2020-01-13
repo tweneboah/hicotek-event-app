@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from "react";
 import EventDashboard from "../../features/event/EventDashboard/EventDashboard";
 import Navbar from "../../features/nav/Navbar/Navbar";
@@ -8,35 +10,33 @@ import PeopleDashboard from "../../features/user/PeopleDashboard/PeopleDashboard
 import UserDetailed from "../../features/user/userDetailed/UserDetailed";
 import SettingsDashboard from "../../features/user/Settings/SettingsDashboard";
 import EventForm from "../../features/event/EventForm/EventForm";
-
-
+import EventDetailPage from "../../features/event/EventDetailPage/EventDetailPage";
 
 class App extends Component {
   render() {
     return (
       <>
-        <Route exact path='/' component={HomePage} />
+        <Route exact path="/" component={HomePage} />
 
-        <Route path='/(.+)'
+        <Route
+          path="/(.+)"
           render={() => (
             <>
               <Navbar />
 
-              <Container className='main'>
+              <Container className="main">
+                <Route exact path="/events" component={EventDashboard} />
+                <Route exact path="/people" component={PeopleDashboard} />
+                <Route exact path="/profile/:id" component={UserDetailed} />
 
-                <Route exact path='/events' component={EventDashboard} />
-                <Route exact path='/people' component={PeopleDashboard} />
-                <Route exact path='/profile/:id' component={UserDetailed} />
+                <Route path="/settings" component={SettingsDashboard} />
 
-                <Route path='/settings' component={SettingsDashboard} />
+                <Route exact path="/create-event" component={EventForm} />
 
-                <Route exact path='/create-event' component={EventForm} />
-
-
+                <Route exact path="/events/:id" component={EventDetailPage} />
               </Container>
             </>
           )}
-
         />
       </>
     );
