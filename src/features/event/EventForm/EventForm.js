@@ -2,15 +2,15 @@
 
 import React, { Component } from "react";
 import { Segment, Form, Button } from "semantic-ui-react";
+import { connect } from "react-redux";
+import {
+  createEvent,
+  updateEvent
+} from "../../../redux/actions/eventActions/eventActions";
+import cuid from "cuid";
 
 class EventForm extends Component {
-  state = {
-    title: "",
-    date: "",
-    city: "",
-    venue: "",
-    hostedBy: ""
-  };
+  state = { ...this.props.event };
 
   //-----HANDLE INPUT CHANGE-------------
 
@@ -29,25 +29,23 @@ class EventForm extends Component {
     //Check if there is an already event data in ourt state because we updated our for state values with componentDidMount
 
     if (this.state.id) {
-      this.props.handleUpdateEvent(this.state);
+      this.props.updateEvent(this.state);
+      this.props.history.push(`/events/${this.state.id}`);
     } else {
-      this.props.handleCreateEvent(this.state);
+      //Add new property to the existing data
+      const newEvent = {
+        ...this.state,
+        id: cuid(),
+        hostPhotoURL: "/assets/images/user.png"
+      };
+      this.props.createEvent(newEvent);
+      this.props.history.push(`/events`);
     }
   };
 
   //------POPULATE THE SELECTED EVENT DATA INTO OUR FORM THROUGH STATE-------
 
-  componentDidMount() {
-    if (this.props.selectedEventData !== null) {
-      this.setState({
-        ...this.props.selectedEventData
-      });
-    }
-  }
-
   render() {
-    const { cancelFormOpen, handleUpdateEvent } = this.props;
-
     const { title, date, city, hostedBy, venue } = this.state;
 
     return (
@@ -102,7 +100,7 @@ class EventForm extends Component {
           <Button positive type="submit">
             Submit
           </Button>
-          <Button type="button" onClick={cancelFormOpen}>
+          <Button type="button" onClick={this.props.history.goBack}>
             cancel
           </Button>
         </Form>
@@ -111,4 +109,31 @@ class EventForm extends Component {
   }
 }
 
-export default EventForm;
+//------------MAP STATE TO PROPS-------
+const mapStateToProps = (state, ownProps) => {
+  const eventId = ownProps.match.params.id;
+
+  //This represent the state of our form
+
+  let event = {
+    title: "",
+    date: "",
+    city: "",
+    venue: "",
+    hostedBy: ""
+  };
+  if (eventId && state.events.length > 0) {
+    event = state.events.filter((event) => event.id === eventId)[0];
+  }
+
+  return {
+    event
+  };
+};
+
+const actions = {
+  createEvent,
+  updateEvent
+};
+
+export default connect(mapStateToProps, actions)(EventForm);

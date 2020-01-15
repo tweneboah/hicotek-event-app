@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 class EventListItem extends Component {
   render() {
-    const { event, handleSelectEvent, handleDeleteEvent } = this.props;
+    const { event, handleDeleteEvent } = this.props;
     return (
       <Segment.Group>
         <Segment>
@@ -52,7 +52,6 @@ class EventListItem extends Component {
             color="teal"
             floated="right"
             content="View"
-            onClick={() => handleSelectEvent(event)}
           />
         </Segment>
       </Segment.Group>

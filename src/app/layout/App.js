@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import EventDashboard from "../../features/event/EventDashboard/EventDashboard";
 import Navbar from "../../features/nav/Navbar/Navbar";
 import { Container } from "semantic-ui-react";
-import { Route } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 import HomePage from "../../features/home/HomePage";
 import PeopleDashboard from "../../features/user/PeopleDashboard/PeopleDashboard";
 import UserDetailed from "../../features/user/userDetailed/UserDetailed";
@@ -25,15 +25,23 @@ class App extends Component {
               <Navbar />
 
               <Container className="main">
-                <Route exact path="/events" component={EventDashboard} />
-                <Route exact path="/people" component={PeopleDashboard} />
-                <Route exact path="/profile/:id" component={UserDetailed} />
+                <Switch key={this.props.location.key}>
+                  <Route exact path="/events" component={EventDashboard} />
+                  <Route exact path="/people" component={PeopleDashboard} />
+                  <Route exact path="/profile/:id" component={UserDetailed} />
 
-                <Route path="/settings" component={SettingsDashboard} />
+                  <Route path="/settings" component={SettingsDashboard} />
 
-                <Route exact path="/create-event" component={EventForm} />
+                  <Route
+                    exact
+                    path={["/create-event", "/manage/:id"]}
+                    component={EventForm}
+                  />
 
-                <Route exact path="/events/:id" component={EventDetailPage} />
+                  {/* <Route exact path="/manage/:id" component={EventForm} />
+                <Route exact path="/create-event" component={EventForm} /> */}
+                  <Route exact path="/events/:id" component={EventDetailPage} />
+                </Switch>
               </Container>
             </>
           )}
@@ -43,4 +51,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);
