@@ -3,7 +3,7 @@
 import React, { Component } from "react";
 import { Grid, Button } from "semantic-ui-react";
 import EventList from "../EventList/EventList";
-import cuid from "cuid";
+
 import { connect } from "react-redux";
 import {
   createEvent,
