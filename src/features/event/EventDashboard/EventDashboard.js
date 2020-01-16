@@ -10,6 +10,7 @@ import {
   deleteEvent,
   updateEvent
 } from "../../../redux/actions/eventActions/eventActions";
+import { firestoreConnect } from "react-redux-firebase";
 
 class EventDashboard extends Component {
   //---------DELETE EVENT---------
@@ -22,7 +23,6 @@ class EventDashboard extends Component {
     //Our state now act as props from redux
     const { events } = this.props;
 
-    if (events === null) return <div>loading....</div>;
     return (
       <Grid>
         <Grid.Column width={10}>
@@ -45,7 +45,7 @@ class EventDashboard extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    events: state.events
+    events: state.firestore.ordered.events
   };
 };
 
@@ -56,4 +56,17 @@ const actions = {
   updateEvent
 };
 
-export default connect(mapStateToProps, actions)(EventDashboard);
+//------CONNECT TO FIRESTORE DATABASE-----
+//Use firestoreConnect
+//Pass the component as argument to firestoreConnect
+export default connect(
+  mapStateToProps,
+  actions
+)(
+  firestoreConnect([
+    {
+      //Contains array of queries or tables in our firestore
+      collection: "events"
+    }
+  ])(EventDashboard)
+);
