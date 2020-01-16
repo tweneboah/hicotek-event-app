@@ -21,6 +21,8 @@ class EventDashboard extends Component {
   render() {
     //Our state now act as props from redux
     const { events } = this.props;
+
+    if (events === null) return <div>loading....</div>;
     return (
       <Grid>
         <Grid.Column width={10}>

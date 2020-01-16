@@ -11,6 +11,10 @@ import UserDetailed from "../../features/user/userDetailed/UserDetailed";
 import SettingsDashboard from "../../features/user/Settings/SettingsDashboard";
 import EventForm from "../../features/event/EventForm/EventForm";
 import EventDetailPage from "../../features/event/EventDetailPage/EventDetailPage";
+import SimpleMap from "../../TestComponent/SimpleMap";
+import TestPlaces from "../../TestComponent/TestPlaces";
+import TestModal from "../../TestComponent/Modals/TestModal";
+import ModalManger from "../../TestComponent/Modals/ModalManger";
 
 class App extends Component {
   render() {
@@ -23,7 +27,7 @@ class App extends Component {
           render={() => (
             <>
               <Navbar />
-
+              <ModalManger />
               <Container className="main">
                 <Switch key={this.props.location.key}>
                   <Route exact path="/events" component={EventDashboard} />

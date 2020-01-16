@@ -26,7 +26,7 @@ class TestPlaces extends React.Component {
 
   render() {
     return (
-      <Form>
+      <Form style={{ margin: 50 }}>
         <Form.Field>
           <PlacesAutocomplete
             value={this.state.address}

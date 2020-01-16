@@ -115,8 +115,11 @@ class EventForm extends Component {
               />
               <Field
                 name="date"
-                component={TextInput}
-                placeholder="Event Date"
+                component={DateInput}
+                dateFormat="dd LLL yyyy h:mm a"
+                placeholder="Event date"
+                showTimeSelect
+                timeFormat="HH:mm"
               />
               <Button
                 disabled={invalid || submitting || pristine}
