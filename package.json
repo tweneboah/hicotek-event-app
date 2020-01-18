@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/firebase-client": "^0.1.32",
     "cuid": "^2.1.6",
-    "date-fns": "2.0.0-alpha.27",
+    "date-fns": "^2.0.0-alpha.27",
     "firebase": "^6.0.2",
     "google-map-react": "^1.1.4",
     "moment": "^2.22.0",

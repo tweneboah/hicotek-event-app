@@ -11,17 +11,18 @@ import UserDetailed from "../../features/user/userDetailed/UserDetailed";
 import SettingsDashboard from "../../features/user/Settings/SettingsDashboard";
 import EventForm from "../../features/event/EventForm/EventForm";
 import EventDetailPage from "../../features/event/EventDetailPage/EventDetailPage";
-import SimpleMap from "../../TestComponent/SimpleMap";
-import TestPlaces from "../../TestComponent/TestPlaces";
-import TestModal from "../../TestComponent/Modals/TestModal";
 import ModalManger from "../../TestComponent/Modals/ModalManger";
+import Login from "../../features/auth/Login/Login";
+import Register from "../../features/auth/Register/Register";
 
 class App extends Component {
   render() {
     return (
       <>
         <Route exact path="/" component={HomePage} />
+        <Route exact path="/login" component={Login} />
 
+        <Route exact path="/register" component={Register} />
         <Route
           path="/(.+)"
           render={() => (

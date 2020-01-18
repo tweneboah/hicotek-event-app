@@ -1,13 +1,24 @@
 /** @format */
 
 import React from "react";
-import { Form, Segment, Button } from "semantic-ui-react";
+import { Form, Segment, Button, Label } from "semantic-ui-react";
 import { Field, reduxForm } from "redux-form";
 import TextInput from "../../../app/common/form/TextInput";
+import { login } from "../../../redux/actions/authActions/authActions";
+import { connect } from "react-redux";
 
-const LoginForm = () => {
+//handleSubmit from redux form
+//The error is from redux we passed to action and it's availabe as props in our form
+
+const LoginForm = ({ login, handleSubmit, error }) => {
+  // Whatever this [onSubmit={handleSubmit(login)] returns is from the form input
   return (
-    <Form error size="large">
+    <Form
+      onSubmit={handleSubmit(login)}
+      size="large"
+      autoComplete="off"
+      style={{ margin: 200 }}
+    >
       <Segment>
         <Field
           name="email"
@@ -21,6 +32,11 @@ const LoginForm = () => {
           type="password"
           placeholder="password"
         />
+        {error && (
+          <Label basic color="red">
+            {error}
+          </Label>
+        )}
         <Button fluid size="large" color="teal">
           Login
         </Button>
@@ -29,4 +45,11 @@ const LoginForm = () => {
   );
 };
 
-export default reduxForm({ form: "loginForm" })(LoginForm);
+const actions = {
+  login
+};
+
+export default connect(
+  null,
+  actions
+)(reduxForm({ form: "loginForm" })(LoginForm));
