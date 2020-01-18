@@ -126,3 +126,19 @@ export const registerUser = (user) => async (
     });
   }
 };
+
+export const socialLogin = (selectedProvider) => {
+  return async (dispatch, getState, { getFirebase }) => {
+    const firebase = getFirebase();
+
+    try {
+      const user = await firebase.login({
+        provider: selectedProvider,
+        type: "popup" //Poping up social login window
+      });
+      console.log(user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
