@@ -29,7 +29,8 @@ import firebase from "../../app/config/firebase";
 const rrfConfig = {
   userProfile: "users", //Users are stored  = table
   attachAuthIsReady: true, //Wait before a user is authenticated before rendering our app
-  useFirestoreForProfile: true
+  useFirestoreForProfile: true,
+  updateProfileOnLogin: false
 };
 
 export const configureStore = () => {

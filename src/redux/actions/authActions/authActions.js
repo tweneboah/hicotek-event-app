@@ -41,6 +41,7 @@
 // };
 
 import { SubmissionError, reset } from "redux-form";
+import { toastr } from "react-redux-toastr";
 
 export const login = (creds) => {
   return async (dispatch, getState, { getFirebase }) => {
@@ -128,17 +129,74 @@ export const registerUser = (user) => async (
 };
 
 export const socialLogin = (selectedProvider) => {
-  return async (dispatch, getState, { getFirebase }) => {
+  return async (dispatch, getState, { getFirebase, getFirestore }) => {
     const firebase = getFirebase();
+    const firestore = getFirestore();
 
     try {
       const user = await firebase.login({
         provider: selectedProvider,
         type: "popup" //Poping up social login window
       });
+
+      //Check if it's a new user then we update the user profile
+
+      // if (user.additionalUserInfo.isNewUser) {
+      //   await firestore.set(`users/${user.user.uid}`, {
+      //     displayName: user.profile.displayName,
+      //     photoURL: user.profile.avatarUrl,
+      //     createdAt: firestore.fieldvalue.serverTimestamp()
+      //   });
+      // }
+
+      if (user.additionalUserInfo.isNewUser) {
+        await firestore.set(`users/${user.user.uid}`, {
+          displayName: user.profile.displayName,
+          photoURL: user.profile.avatarUrl,
+          createdAt: firestore.FieldValue.serverTimestamp()
+        });
+      }
+
       console.log(user);
     } catch (error) {
       console.log(error);
     }
   };
+};
+
+export const updatePassword2 = (crendentials) => {
+  return async (dispatch, getState, { getFirebase, getFirestore }) => {
+    const firebase = getFirebase();
+
+    const user = firebase.auth.currentUser;
+    try {
+      await user.updatePassword(crendentials.newPassword1);
+      //reset Form
+      await dispatch(reset("account")); //This takes the name of the form
+      //Notification for success
+      toastr.success("Success", "Your password has been updated");
+    } catch (error) {
+      throw new SubmissionError({
+        _error: error.message
+      });
+    }
+  };
+};
+
+export const updatePassword = (creds) => async (
+  dispatch,
+  getState,
+  { getFirebase }
+) => {
+  const firebase = getFirebase();
+  const user = firebase.auth().currentUser;
+  try {
+    await user.updatePassword(creds.newPassword1);
+    await dispatch(reset("account"));
+    toastr.success("Success", "Your password has been updated");
+  } catch (error) {
+    throw new SubmissionError({
+      _error: error.message
+    });
+  }
 };

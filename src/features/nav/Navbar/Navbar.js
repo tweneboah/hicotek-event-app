@@ -26,8 +26,8 @@ class Navbar extends Component {
     this.props.history.push("/");
   };
   render() {
-    const { auth } = this.props;
-
+    const { auth, profile } = this.props;
+    console.log(auth.displayName);
     const authenticated = auth.isLoaded && !auth.isEmpty;
     return (
       <Menu inverted fixed="top">
@@ -46,7 +46,11 @@ class Navbar extends Component {
           {/* SIGN SIGNOUT MENUS */}
 
           {authenticated ? (
-            <SingInMenu handleSignOut={this.handleSignOut} auth={auth} />
+            <SingInMenu
+              handleSignOut={this.handleSignOut}
+              auth={auth}
+              profile={profile}
+            />
           ) : (
             <SignOutMenu
               handleSignIn={this.handleSignIn}
@@ -65,7 +69,8 @@ class Navbar extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
+    profile: state.firebase.profile
   };
 };
 
